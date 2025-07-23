@@ -1,3 +1,5 @@
+// 401 Unauthorized - CORS blocking access
+
 import { Client, Databases, Query, ID, Permission, Role } from 'appwrite';
 
 const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
