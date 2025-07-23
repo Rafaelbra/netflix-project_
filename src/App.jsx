@@ -3,6 +3,7 @@ import Search from './Components/Search.jsx'
 import Spinner from './Components/Spinner.jsx'
 import MovieCard from './Components/MovieCard.jsx'
 import { useDebounce, useStateList } from 'react-use'
+import {updateSearchCount} from './appwrite.js'
 
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -33,6 +34,7 @@ const App = () => {
     setIsLoading(true);
     setErrorMessage('');
 
+
     try {
 
       const endpoint = query ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
@@ -54,7 +56,9 @@ const App = () => {
 
       setMovieList(data.results || []);
       
-        
+      if (query && data.results.length > 0) {
+        await updateSearchCount(query, data.results[0]);
+      }
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage('Error fetching movies. Please, try again later.');
